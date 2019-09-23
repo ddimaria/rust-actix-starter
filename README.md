@@ -20,6 +20,12 @@ git clone https://github.com/ddimaria/rust-actix-starter.git
 cd rust-actix-starter
 ```
 
+Copy over the example .env file:
+
+```shell
+cp .env.example .env
+```
+
 ## Running Tests
 
 To run all of the tests:
@@ -43,3 +49,9 @@ To startup the server and autoreload on code changes:
 ```shell
 systemfd --no-pid -s http::3000 -- cargo watch -x run
 ```
+
+## License
+
+This project is licensed under:
+
+- MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
