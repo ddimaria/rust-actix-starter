@@ -1,6 +1,18 @@
 # Rust/Actix Starter Kit
 
-A production-quality starter app using Actix 1.x. Includes tests.
+A production-quality starter app using Actix 1.x. Includes tests and coverage.
+
+## Features
+
+- Actix 1.x HTTP Server
+- Filesystem organized for scale
+- .env for local development
+- Lazy Static Config struct
+- Built-in Healthcheck (includes cargo version info)
+- Listers configured for TDD
+- Custom Errors and HTTP Payload/Json Validation
+- Working Tests throughout
+- Test Coverage Reports
 
 ## Packages
 
