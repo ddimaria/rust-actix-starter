@@ -9,7 +9,7 @@ use crate::server::server;
 
 mod config;
 mod errors;
-mod handlers;
+pub mod handlers;
 mod helpers;
 mod models;
 mod routes;
