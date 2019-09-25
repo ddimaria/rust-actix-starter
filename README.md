@@ -70,7 +70,7 @@ I created a repo on DockerHub that I'll update with each Rust version
 In the root of the project:
 
 ```shell
-docker run -it --rm --security-opt seccomp=unconfined --volume "${PWD}":/volume --workdir /volume ddimaria/rust-kcov:1.37
+docker run -it --rm --security-opt seccomp=unconfined --volume "${PWD}":/volume --workdir /volume ddimaria/rust-kcov:1.37 --exclude-pattern=/.cargo,/usr/lib,/src/main.rs,src/server.rs
 ```
 
 _note: converage takes a long time to run (about 30 mins)._
@@ -82,3 +82,57 @@ You can view the HTML output of the report at `target/cov/index.html`
 This project is licensed under:
 
 - MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
+
+## Endpoints
+
+### Healthcheck
+
+Determine if the system is healthy.
+
+`/health`
+
+#### Response
+
+```json
+{
+  "status": "ok",
+  "version": "0.1.0"
+}
+```
+
+Example:
+
+```shell
+curl -X GET http://127.0.0.1:3000/health
+```
+
+### Users
+
+Get all users.
+
+`GET /api/v1/user`
+
+#### Response
+
+```json
+[
+  {
+    "id": "a421a56e-8652-4da6-90ee-59dfebb9d1b4",
+    "first_name": "Satoshi",
+    "last_name": "Nakamoto",
+    "email": "satoshi@nakamotoinstitute.org"
+  },
+  {
+    "id": "c63d285b-7794-4419-bfb7-86d7bb3ff17d",
+    "first_name": "Barbara",
+    "last_name": "Liskov",
+    "email": "bliskov@substitution.org"
+  }
+]
+```
+
+Example:
+
+```shell
+curl -X GET http://127.0.0.1:3000/api/v1/user
+```
