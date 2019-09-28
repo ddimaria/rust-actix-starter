@@ -9,10 +9,11 @@ A production-quality starter app using Actix 1.x. Includes tests and coverage.
 - .env for local development
 - Lazy Static Config struct
 - Built-in Healthcheck (includes cargo version info)
-- Listers configured for TDD
+- Listeners configured for TDD
 - Custom Errors and HTTP Payload/Json Validation
 - Working Tests throughout
-- Containerized Test Coverage Reports
+- Test Coverage Reports
+- Dockerfile for Running the Server in a Container
 
 ## Packages
 
@@ -74,9 +75,23 @@ In the root of the project:
 docker run -it --rm --security-opt seccomp=unconfined --volume "${PWD}":/volume --workdir /volume ddimaria/rust-kcov:1.37 --exclude-pattern=/.cargo,/usr/lib,/src/main.rs,src/server.rs
 ```
 
-_note: converage takes a long time to run (about 30 mins)._
+_note: converage takes a long time to run (up to 30 mins)._
 
 You can view the HTML output of the report at `target/cov/index.html`
+
+## Docker
+
+To build a Docker image of the application:
+
+```shell
+docker build -t rust_actix_starter .
+```
+
+Once the image is built, you can run the container in port 3000:
+
+```shell
+docker run -it --rm --env-file=.env.docker -p 3000:3000 --name rust_actix_starter rust_actix_starter
+```
 
 ## Endpoints
 
