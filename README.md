@@ -12,7 +12,7 @@ A production-quality starter app using Actix 1.x. Includes tests and coverage.
 - Listers configured for TDD
 - Custom Errors and HTTP Payload/Json Validation
 - Working Tests throughout
-- Test Coverage Reports
+- Containerized Test Coverage Reports
 
 ## Packages
 
@@ -22,6 +22,7 @@ A production-quality starter app using Actix 1.x. Includes tests and coverage.
 - `envy`: Deserializes Environment Variables into a Config Struct
 - `listenfd`: Listens for Filesystem Changes
 - `validator`: Validates incoming Json
+- `kcov`: Coverage Analysis
 
 ## Installation
 
@@ -77,19 +78,13 @@ _note: converage takes a long time to run (about 30 mins)._
 
 You can view the HTML output of the report at `target/cov/index.html`
 
-## License
-
-This project is licensed under:
-
-- MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
-
 ## Endpoints
 
 ### Healthcheck
 
 Determine if the system is healthy.
 
-`/health`
+`GET /health`
 
 #### Response
 
@@ -106,9 +101,7 @@ Example:
 curl -X GET http://127.0.0.1:3000/health
 ```
 
-### Users
-
-Get all users.
+### Get All Users
 
 `GET /api/v1/user`
 
@@ -136,3 +129,104 @@ Example:
 ```shell
 curl -X GET http://127.0.0.1:3000/api/v1/user
 ```
+
+### Get a User
+
+`GET /api/v1/user/{id}`
+
+#### Request
+
+| Param | Type | Description   |
+| ----- | ---- | ------------- |
+| id    | Uuid | The user's id |
+
+#### Response
+
+```json
+{
+  "id": "a421a56e-8652-4da6-90ee-59dfebb9d1b4",
+  "first_name": "Satoshi",
+  "last_name": "Nakamoto",
+  "email": "satoshi@nakamotoinstitute.org"
+}
+```
+
+Example:
+
+```shell
+curl -X GET http://127.0.0.1:3000/api/v1/user/a421a56e-8652-4da6-90ee-59dfebb9d1b4
+```
+
+#### Response - Not Found
+
+`404 Not Found`
+
+```json
+{
+  "errors": ["User c63d285b-7794-4419-bfb7-86d7bb3ff17a not found"]
+}
+```
+
+### Create a User
+
+`POST /api/v1/user`
+
+#### Request
+
+| Param      | Type   | Description              | Required | Validations           |
+| ---------- | ------ | ------------------------ | :------: | --------------------- |
+| first_name | String | The user's first name    |   yes    | at least 3 characters |
+| last_name  | String | The user's last name     |   yes    | at least 3 characters |
+| email      | String | The user's email address |   yes    | valid email address   |
+
+```json
+{
+  "first_name": "Linus",
+  "last_name": "Torvalds",
+  "email": "torvalds@transmeta.com"
+}
+```
+
+#### Response
+
+```json
+{
+  "id": "0c419802-d1ef-47d6-b8fa-c886a23d61a7",
+  "first_name": "Linus",
+  "last_name": "Torvalds",
+  "email": "torvalds@transmeta.com"
+}
+```
+
+Example:
+
+```shell
+curl -X POST \
+  http://127.0.0.1:3000/api/v1/user \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "first_name": "Linus",
+    "last_name": "Torvalds",
+    "email": "torvalds@transmeta.com"
+}'
+```
+
+#### Response - Validation Errors
+
+`422 Unprocessable Entity`
+
+```json
+{
+  "errors": [
+    "first_name is required and must be at least 3 characters",
+    "last_name is required and must be at least 3 characters",
+    "email must be a valid email"
+  ]
+}
+```
+
+## License
+
+This project is licensed under:
+
+- MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)

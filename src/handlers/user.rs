@@ -26,7 +26,10 @@ pub struct CreateUserRequest {
     ))]
     pub first_name: String,
 
-    #[validate(length(min = 3))]
+    #[validate(length(
+        min = 3,
+        message = "last_name is required and must be at least 3 characters"
+    ))]
     pub last_name: String,
 
     #[validate(email(message = "email must be a valid email"))]
