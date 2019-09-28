@@ -1,5 +1,7 @@
 # Rust/Actix Starter Kit
 
+[![Build Status](https://travis-ci.com/ddimaria/rust-actix-starter.svg?branch=master)](https://travis-ci.com/ddimaria/rust-actix-starter)
+
 A production-quality starter app using Actix 1.x. Includes tests and coverage.
 
 ## Features
