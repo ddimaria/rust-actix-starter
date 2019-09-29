@@ -14,6 +14,7 @@ mod helpers;
 mod models;
 mod routes;
 mod server;
+mod tests;
 mod validate;
 
 fn main() -> std::io::Result<()> {

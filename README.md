@@ -20,7 +20,7 @@ had all of the baseline, production-ready features baked in.
 - Built-in Healthcheck (includes cargo version info)
 - Listeners configured for TDD
 - Custom Errors and HTTP Payload/Json Validation
-- Working Tests throughout
+- Unit and Integration Tests
 - Test Coverage Reports
 - Dockerfile for Running the Server in a Container
 - TravisCI Integration
@@ -66,7 +66,44 @@ To startup the server and autoreload on code changes:
 systemfd --no-pid -s http::3000 -- cargo watch -x run
 ```
 
-## Running Tests
+## Tests
+
+Integration tests are in the `/src/tests` folder. There are helper functions
+to make testing the API straightforward. For example, if we want to test the
+`GET /api/v1/user` route:
+
+```rust
+  use crate::tests::helpers::tests::assert_get;
+
+  #[test]
+  fn test_get_users() {
+      assert_get("/api/v1/user");
+  }
+```
+
+Using the Actix test server, the request is sent and the response is asserted
+for a successful response:
+
+`assert!(response.status().is_success());`
+
+Similarly, to test a POST route:
+
+```rust
+use crate::handlers::user::CreateUserRequest;
+use crate::tests::helpers::tests::assert_post;
+
+#[test]
+fn test_create_user() {
+    let params = CreateUserRequest {
+        first_name: "Satoshi".into(),
+        last_name: "Nakamoto".into(),
+        email: "satoshi@nakamotoinstitute.org".into(),
+    };
+    assert_post("/api/v1/user", params);
+}
+```
+
+### Running Tests
 
 To run all of the tests:
 
@@ -74,7 +111,7 @@ To run all of the tests:
 cargo test
 ```
 
-## Test Covearage
+### Test Covearage
 
 I created a repo on DockerHub that I'll update with each Rust version
 (starting at 1.37), whose tags will match the Rust version.
