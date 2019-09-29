@@ -3,6 +3,13 @@
 [![Build Status](https://travis-ci.com/ddimaria/rust-actix-starter.svg?branch=master)](https://travis-ci.com/ddimaria/rust-actix-starter)
 
 A production-quality starter app using Actix 1.x. Includes tests and coverage.
+Diesel was intentionally omitted to add in flexibility for usage.
+A full framework that includes Diesel is being developed at https://github.com/ddimaria/rust-actix-framework.
+
+## Motivation
+
+I needed a quick way to bootstrap an Actix repo for various projects that
+had all of the baseline, production-ready features baked in.
 
 ## Features
 
@@ -16,6 +23,7 @@ A production-quality starter app using Actix 1.x. Includes tests and coverage.
 - Working Tests throughout
 - Test Coverage Reports
 - Dockerfile for Running the Server in a Container
+- TravisCI Integration
 
 ## Packages
 
